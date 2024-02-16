@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2817,6 +2817,7 @@ GameObject:
   - component: {fileID: 1610308483}
   - component: {fileID: 1610308482}
   - component: {fileID: 1610308481}
+  - component: {fileID: 1610308487}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -2831,7 +2832,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610308480}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c815709773977734b98e7b6ad92b839a, type: 3}
   m_Name: 
@@ -2955,6 +2956,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1610308487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610308480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56620500d6ab543469a8bef34bba2b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_player: {fileID: 1993526438}
+  m_detectionDistance: 5
+  waypoints:
+  - {fileID: 725188023}
+  - {fileID: 908710740}
+  - {fileID: 1410943726}
+  - {fileID: 823702981}
+  - {fileID: 291605894}
+  - {fileID: 190652925}
+  currentWaypointIndex: 0
 --- !u!1 &1700853971
 GameObject:
   m_ObjectHideFlags: 0

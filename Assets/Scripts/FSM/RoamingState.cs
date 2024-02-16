@@ -1,19 +1,33 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class RoamingState : CharacterState
 {
-
+    
 
     public override void OnEnter()
     {
-        m_stateMachine.GetAgent().isStopped = false;
+       
         Debug.Log("Enter state: FreeState\n");
+
+
     }
 
     public override void OnUpdate()
     {
-        m_stateMachine.GetAgent().SetDestination(m_stateMachine.GetPlayerTransform().position);
+        if (m_stateMachine.waypoints.Length == 0) return; // Return if no waypoints are set
+
+        // Check if NPC has reached the current waypoint
+        if (Vector3.Distance(m_stateMachine.GetAgent().transform.position, m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position) < 1f)
+        {
+            m_stateMachine.currentWaypointIndex = (m_stateMachine.currentWaypointIndex + 1) % m_stateMachine.waypoints.Length; // Move to the next waypoint
+        }
+        else
+        {
+            m_stateMachine.GetAgent().SetDestination(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position); // Move towards the current waypoint
+        }
+
     }
 
     public override void OnFixedUpdate()
@@ -23,7 +37,7 @@ public class RoamingState : CharacterState
 
     public override void OnExit()
     {
-        m_stateMachine.GetAgent().isStopped = true;
+       
     }
 
     public override bool CanEnter(IState currentState)

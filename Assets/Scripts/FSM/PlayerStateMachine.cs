@@ -5,11 +5,13 @@ using UnityEngine.AI;
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    [SerializeField] private Transform m_player;
-    [SerializeField] private float m_detectionDistance;
+    [SerializeField] public Transform m_player;
+    [SerializeField] public float m_detectionDistance;
     List<CharacterState> m_possibleStates;
     CharacterState m_currentState;
     private NavMeshAgent m_agent;
+    public Transform[] waypoints;
+    public int currentWaypointIndex = 0;
 
     private void Awake()
     {
