@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class PursuitState : CharacterState
+public class RoamingState : CharacterState
 {
 
 
@@ -28,15 +28,15 @@ public class PursuitState : CharacterState
 
     public override bool CanEnter(IState currentState)
     {
-	
-        return m_stateMachine.PlayerIsNear();
+
+        return !m_stateMachine.PlayerIsNear();
 
     }
 
     public override bool CanExit()
     {
-        
-        return !m_stateMachine.PlayerIsNear();
+
+        return m_stateMachine.PlayerIsNear();
     }
 
 }

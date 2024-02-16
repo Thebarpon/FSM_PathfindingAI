@@ -21,6 +21,7 @@ public class PlayerStateMachine : MonoBehaviour
         m_possibleStates = new List<CharacterState>();
         m_possibleStates.Add(new IdleState());
         m_possibleStates.Add(new PursuitState());
+        m_possibleStates.Add(new RoamingState());
     }
 
     void Start()
