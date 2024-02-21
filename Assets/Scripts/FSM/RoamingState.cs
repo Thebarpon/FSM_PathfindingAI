@@ -27,7 +27,7 @@ public class RoamingState : CharacterState
             //Debug.Log(m_stateMachine.GetAgent());
             //Debug.Log(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex]);
             //Debug.Log(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position);
-            m_stateMachine.m_agent.SetDestination(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position); // Move towards the current waypoint
+            m_stateMachine.GetAgent().SetDestination(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position); // Move towards the current waypoint
         }
     }
 

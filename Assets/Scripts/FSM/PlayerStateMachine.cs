@@ -8,7 +8,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] public float m_detectionDistance;
     List<CharacterState> m_possibleStates;
     CharacterState m_currentState;
-    public NavMeshAgent m_agent;
+    private NavMeshAgent m_agent;
     private bool m_isIdle = false;
     public Transform[] waypoints;
     public int currentWaypointIndex = 0;
