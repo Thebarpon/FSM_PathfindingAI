@@ -2970,14 +2970,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_player: {fileID: 1993526438}
   m_detectionDistance: 5
-  waypoints:
+  m_waypoints:
   - {fileID: 725188023}
   - {fileID: 908710740}
   - {fileID: 1410943726}
   - {fileID: 823702981}
   - {fileID: 291605894}
   - {fileID: 190652925}
-  currentWaypointIndex: 0
+  m_currentWaypointIndex: 0
 --- !u!1 &1700853971
 GameObject:
   m_ObjectHideFlags: 0

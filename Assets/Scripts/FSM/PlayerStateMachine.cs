@@ -110,13 +110,11 @@ public class PlayerStateMachine : MonoBehaviour
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 Debug.DrawRay(transform.position, direction, Color.green);
-                //Debug.Log("Did Hit");
                 return true;
             }
             else
             {
                 Debug.DrawRay(transform.position, direction, Color.red);
-                //Debug.Log("Did not Hit");
                 return false;
             }
 
