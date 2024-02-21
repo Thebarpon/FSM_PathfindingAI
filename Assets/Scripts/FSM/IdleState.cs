@@ -14,6 +14,7 @@ public class IdleState : CharacterState
 
     public override void OnUpdate()
     {
+        // Check if the character is still within their idle duration period.
         if (m_currentIdleDuration > 0)
         {
             m_currentIdleDuration -= Time.deltaTime;

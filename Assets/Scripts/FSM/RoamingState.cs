@@ -11,23 +11,22 @@ public class RoamingState : CharacterState
 
     public override void OnUpdate()
     {
-        if (m_stateMachine.waypoints.Length == 0)
+        // Check if there are no waypoints set for roaming
+        if (m_stateMachine.m_waypoints.Length == 0)
         {
             Debug.Log("No waypoints set");
-            return; // Return if no waypoints are set
+            return; // Exit the method early if there are no waypoints
         }
-        // Check if NPC has reached the current waypoint
-        if (Vector3.Distance(m_stateMachine.transform.position, m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position) < 1f)
+        // Check if the character has reached its current waypoint
+        if (Vector3.Distance(m_stateMachine.transform.position, m_stateMachine.m_waypoints[m_stateMachine.m_currentWaypointIndex].position) < 1f)
         {
-            Debug.Log("Set destination");
-            m_stateMachine.currentWaypointIndex = (m_stateMachine.currentWaypointIndex + 1) % m_stateMachine.waypoints.Length; // Move to the next waypoint
+            Debug.Log("Reached waypoint, setting next destination");
+            m_stateMachine.m_currentWaypointIndex = (m_stateMachine.m_currentWaypointIndex + 1) % m_stateMachine.m_waypoints.Length; // Move to the next waypoint
         }
         else
         {
-            //Debug.Log(m_stateMachine.GetAgent());
-            //Debug.Log(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex]);
-            //Debug.Log(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position);
-            m_stateMachine.GetAgent().SetDestination(m_stateMachine.waypoints[m_stateMachine.currentWaypointIndex].position); // Move towards the current waypoint
+            // Sets the character's destination to the current waypoint's position
+            m_stateMachine.GetAgent().SetDestination(m_stateMachine.m_waypoints[m_stateMachine.m_currentWaypointIndex].position); // Move towards the current waypoint
         }
     }
 

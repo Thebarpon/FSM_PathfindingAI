@@ -14,6 +14,7 @@ public class PursuitState : CharacterState
 
     public override void OnUpdate()
     {
+        // Decrease chasing duration over time, stopping the pursuit when the time runs out.
         if (m_chasingCurrentDuration > 0)
         {
             m_chasingCurrentDuration -= Time.deltaTime;
@@ -23,6 +24,7 @@ public class PursuitState : CharacterState
             m_stateMachine.SetIdle(true);
         }
 
+        // Continuously update the destination to the player's position for pursuit.
         m_stateMachine.GetAgent().SetDestination(m_stateMachine.GetPlayerTransform().position);
     }
 

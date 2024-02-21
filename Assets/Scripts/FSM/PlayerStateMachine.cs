@@ -4,20 +4,30 @@ using UnityEngine.AI;
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    [SerializeField] public Transform m_player;
-    [SerializeField] public float m_detectionDistance;
-    List<CharacterState> m_possibleStates;
-    CharacterState m_currentState;
+    [SerializeField] private Transform m_player;
+    [SerializeField] private float m_detectionDistance;
     private NavMeshAgent m_agent;
+
+    #region States Variables
+    private List<CharacterState> m_possibleStates;
+    private CharacterState m_currentState;
+    #endregion
+
+    #region Waypoints Variables
+    public Transform[] m_waypoints;
+    public int m_currentWaypointIndex = 0;
+    #endregion
+
+    #region Booleans
     private bool m_isIdle = false;
-    public Transform[] waypoints;
-    public int currentWaypointIndex = 0;
+    #endregion
 
     private void Awake()
     {
         m_agent = GetComponent<NavMeshAgent>();
     }
 
+    // Initialize possible states for the state machine.
     private void CreatePossibleStates()
     {
         m_possibleStates = new List<CharacterState>();
@@ -30,6 +40,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         CreatePossibleStates();
 
+        // Initialize each state with a reference to this state machine.
         foreach (CharacterState state in m_possibleStates)
         {
             state.OnStart(this);
@@ -52,6 +63,7 @@ public class PlayerStateMachine : MonoBehaviour
         m_currentState.OnFixedUpdate();
     }
 
+    // Attempts to transition from the current state to a different state.
     private void TryStateTransition()
     {
         if (!m_currentState.CanExit())
@@ -59,7 +71,7 @@ public class PlayerStateMachine : MonoBehaviour
             return;
         }
 
-        //Je PEUX quitter le state actuel
+        // Loop through all possible states to find a state that can be entered.
         foreach (var state in m_possibleStates)
         {
             if (m_currentState.Equals(state))
@@ -69,21 +81,22 @@ public class PlayerStateMachine : MonoBehaviour
 
             if (state.CanEnter(m_currentState))
             {
-                //Quitter le state actuel
+                // Transition to the new state.
                 m_currentState.OnExit();
                 m_currentState = state;
-                //Rentrer dans le state state
                 m_currentState.OnEnter();
                 return;
             }
         }
     }
 
+    // Returns the current state of the character.
     public CharacterState GetCurrentState()
     {
         return m_currentState;
     }
 
+    // Checks if the player is within detection distance.
     public bool PlayerIsNear()
     {
 
@@ -91,6 +104,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         Vector3 direction = m_player.transform.position - transform.position;
 
+        // Perform a raycast towards the player. If the player is detected within the distance, return true.
         if (Physics.Raycast(transform.position, direction, out hit, m_detectionDistance))
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -110,16 +124,19 @@ public class PlayerStateMachine : MonoBehaviour
         return false;
     }
 
+    // Returns the NavMesh agent component.
     public NavMeshAgent GetAgent()
     {
         return m_agent;
     }
 
+    // Returns the player's transform.
     public Transform GetPlayerTransform()
     {
         return m_player;
     }
 
+    // Sets the idle state of the character.
     public void SetIdle(bool isIdle)
     {
         m_isIdle = isIdle;
