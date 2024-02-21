@@ -50,7 +50,6 @@ public class RoamingState : CharacterState
 
     public override bool CanExit()
     {
-
         return m_stateMachine.PlayerIsNear();
     }
 }
