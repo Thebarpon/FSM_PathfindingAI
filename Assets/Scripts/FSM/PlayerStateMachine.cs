@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +8,8 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] public float m_detectionDistance;
     List<CharacterState> m_possibleStates;
     CharacterState m_currentState;
-    private NavMeshAgent m_agent;
+    public NavMeshAgent m_agent;
+    private bool m_isIdle = false;
     public Transform[] waypoints;
     public int currentWaypointIndex = 0;
 
@@ -21,15 +21,15 @@ public class PlayerStateMachine : MonoBehaviour
     private void CreatePossibleStates()
     {
         m_possibleStates = new List<CharacterState>();
+        m_possibleStates.Add(new RoamingState());
         m_possibleStates.Add(new IdleState());
         m_possibleStates.Add(new PursuitState());
-        m_possibleStates.Add(new RoamingState());
     }
 
     void Start()
     {
         CreatePossibleStates();
-   
+
         foreach (CharacterState state in m_possibleStates)
         {
             state.OnStart(this);
@@ -52,7 +52,7 @@ public class PlayerStateMachine : MonoBehaviour
         m_currentState.OnFixedUpdate();
     }
 
-	private void TryStateTransition()
+    private void TryStateTransition()
     {
         if (!m_currentState.CanExit())
         {
@@ -86,7 +86,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public bool PlayerIsNear()
     {
-        
+
         RaycastHit hit;
 
         Vector3 direction = m_player.transform.position - transform.position;
@@ -96,16 +96,16 @@ public class PlayerStateMachine : MonoBehaviour
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 Debug.DrawRay(transform.position, direction, Color.green);
-                Debug.Log("Did Hit");
+                //Debug.Log("Did Hit");
                 return true;
             }
             else
             {
                 Debug.DrawRay(transform.position, direction, Color.red);
-                Debug.Log("Did not Hit");
+                //Debug.Log("Did not Hit");
                 return false;
             }
-            
+
         }
         return false;
     }
@@ -120,6 +120,12 @@ public class PlayerStateMachine : MonoBehaviour
         return m_player;
     }
 
+    public void SetIdle(bool isIdle)
+    {
+        m_isIdle = isIdle;
+    }
+
+    public bool IsIdle() { return m_isIdle; }
 }
 
 

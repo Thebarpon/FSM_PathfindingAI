@@ -3,16 +3,26 @@ using UnityEngine;
 
 public class PursuitState : CharacterState
 {
-
-
+    private float m_chasingMaxDuration = 5.0f;
+    private float m_chasingCurrentDuration;
     public override void OnEnter()
     {
         m_stateMachine.GetAgent().isStopped = false;
-        Debug.Log("Enter state: FreeState\n");
+        m_chasingCurrentDuration = m_chasingMaxDuration;
+        Debug.Log("Enter state: Pursuit\n");
     }
 
     public override void OnUpdate()
     {
+        if (m_chasingCurrentDuration > 0)
+        {
+            m_chasingCurrentDuration -= Time.deltaTime;
+        }
+        else
+        {
+            m_stateMachine.SetIdle(true);
+        }
+
         m_stateMachine.GetAgent().SetDestination(m_stateMachine.GetPlayerTransform().position);
     }
 
@@ -24,19 +34,18 @@ public class PursuitState : CharacterState
     public override void OnExit()
     {
         m_stateMachine.GetAgent().isStopped = true;
+        Debug.Log("Exit pursuit state");
     }
 
     public override bool CanEnter(IState currentState)
     {
-	
+
         return m_stateMachine.PlayerIsNear();
 
     }
 
     public override bool CanExit()
     {
-        
-        return !m_stateMachine.PlayerIsNear();
+        return !m_stateMachine.PlayerIsNear() || m_stateMachine.IsIdle();
     }
-
 }
